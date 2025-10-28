@@ -144,7 +144,7 @@ export default function HomePage() {
 
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
               {[
-                { title: "Expert Team", desc: "Certified immigration consultants with 15+ years of experience" },
+                { title: "Expert Team", desc: "Certified immigration consultants with 6+ years of experience" },
                 { title: "Proven Track Record", desc: "98% success rate with over 1,500 approved cases" },
                 { title: "Personalized Approach", desc: "Customized strategies tailored to your unique situation" },
                 { title: "Transparent Process", desc: "Clear communication and regular updates throughout your journey" },

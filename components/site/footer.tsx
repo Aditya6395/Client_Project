@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, ArrowRight, Globe, Shield, Users, Plane, Navigation } from "lucide-react"
+import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, ArrowRight, Globe, Shield, Users, Plane, Navigation, Briefcase, GraduationCap, Heart, Home, Building2, ShieldCheck } from "lucide-react"
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -87,7 +87,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* --- Updated Services --- */}
+          {/* --- Updated Services to match Services Page --- */}
           <div>
             <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
               <span className="w-2 h-2 bg-green-500 rounded-full"></span>
@@ -95,22 +95,31 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3">
               {[
-                { href: "/services#tourist-visa", label: "Tourist Visa – All Countries" },
-                { href: "/services#pr", label: "PR – Canada, Australia" },
-                { href: "/services#spouse-visa", label: "Spouse Visa – Canada, NZ, Australia, US" },
-                { href: "/services#study-visa", label: "Study Visa – USA, Canada, UK, Australia" },
-                { href: "/services#business-visa", label: "Business Visa – All Countries" },
-                { href: "/services#flight-ticketing", label: "Flight Ticketing" },
-                { href: "/services#travel-insurance", label: "Travel Insurance" },
-                { href: "/services#work-visa", label: "Work Visa – Schengen" }
+                { href: "/services#tourist-visa", label: "Tourist Visa", icon: Globe, desc: "Canada, Australia, US, UK, NZ, Schengen, China, Dubai" },
+                { href: "/services#pr", label: "Permanent Residency", icon: Home, desc: "Canada & Australia PR pathways" },
+                { href: "/services#spouse-visa", label: "Spouse Visa", icon: Heart, desc: "Canada, NZ, Australia, US" },
+                { href: "/services#study-visa", label: "Study Visa", icon: GraduationCap, desc: "USA, Canada, UK, Australia" },
+                { href: "/services#business-visa", label: "Business Visa", icon: Building2, desc: "All countries" },
+                { href: "/services#work-visa", label: "Work Visa", icon: Briefcase, desc: "Canada, NZ, Australia, UK, Schengen" },
+                { href: "/services#flight-ticketing", label: "Flight Ticketing", icon: Plane, desc: "International & domestic" },
+                { href: "/services#travel-insurance", label: "Travel Insurance", icon: ShieldCheck, desc: "Comprehensive coverage" }
               ].map((service) => (
                 <li key={service.href}>
                   <Link 
                     href={service.href} 
-                    className="group flex items-start gap-2 text-slate-400 hover:text-white transition-all duration-300 text-sm py-1"
+                    className="group flex items-start gap-3 text-slate-400 hover:text-white transition-all duration-300 text-sm py-2 border-b border-slate-800 hover:border-slate-600"
                   >
-                    <Plane className="h-3 w-3 mt-0.5 flex-shrink-0 transform group-hover:scale-110 transition-transform duration-300" />
-                    <span className="flex-1">{service.label}</span>
+                    <div className="p-1 bg-slate-800 rounded-lg group-hover:bg-blue-500 transition-all duration-300">
+                      <service.icon className="h-3 w-3 mt-0.5 flex-shrink-0" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-medium group-hover:text-blue-300 transition-colors">
+                        {service.label}
+                      </div>
+                      <div className="text-xs text-slate-500 group-hover:text-slate-400 mt-1">
+                        {service.desc}
+                      </div>
+                    </div>
                   </Link>
                 </li>
               ))}

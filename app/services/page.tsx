@@ -8,7 +8,7 @@ export default function ServicesPage() {
       id: "tourist-visa",
       icon: Globe,
       title: "Tourist Visa",
-      description: "We assist you in obtaining tourist visas for all countries — ensuring a smooth and hassle-free process.",
+      description: "We assist you in obtaining tourist visas for Canada, Australia, US, UK, New Zealand, Schengen, China, Dubai, and many more countries — ensuring a smooth and hassle-free process.",
       features: [
         "Tourist visa consultation",
         "Application documentation support",
@@ -91,7 +91,7 @@ export default function ServicesPage() {
       id: "work-visa",
       icon: Briefcase,
       title: "Work Visa",
-      description: "Work visa and permit assistance for Schengen countries.",
+      description: "Work visa and permit assistance for Canada, New Zealand, Australia, UK, and Schengen countries.",
       features: [
         "Work permit consultation",
         "Visa filing & documentation",
