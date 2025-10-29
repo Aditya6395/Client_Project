@@ -105,7 +105,7 @@ export default function ProcessPage() {
                 return (
                   <div
                     key={step.number}
-                    className="group relative transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.02]"
+                    className="group relative transition-all duration-700 ease-\[cubic-bezier(0.22,1,0.36,1)\] hover:scale-[1.02]"
                   >
                     {!isLast && (
                       <div className="absolute left-6 top-24 bottom-0 w-0.5 bg-gradient-to-b from-blue-200 to-transparent hidden sm:block animate-pulse-slow" />
@@ -122,7 +122,7 @@ export default function ProcessPage() {
                       </div>
 
                       {/* STEP CONTENT */}
-                      <div className="relative bg-white rounded-2xl border border-slate-200 p-8 shadow-sm overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] group-hover:border-blue-300">
+                      <div className="relative bg-white rounded-2xl border border-slate-200 p-8 shadow-sm overflow-hidden transition-all duration-700 ease-\[cubic-bezier(0.22,1,0.36,1)\] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] group-hover:border-blue-300">
                         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-br from-blue-50/40 to-indigo-50 transition-opacity duration-700" />
                         <div className="relative z-10">
                           <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
@@ -200,7 +200,7 @@ export default function ProcessPage() {
                 href="/contact"
                 className="relative inline-flex items-center justify-center px-10 py-4 text-base font-semibold rounded-xl border border-blue-700 text-blue-700 overflow-hidden group"
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"></span>
+                <span className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-700 ease-\[cubic-bezier(0.22,1,0.36,1)\]"></span>
                 <span className="relative z-10 group-hover:text-white transition-colors duration-500">
                   Get Started
                 </span>

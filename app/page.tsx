@@ -79,14 +79,14 @@ export default function HomePage() {
                 return (
                   <div
                     key={service.title}
-                    className="group relative rounded-2xl bg-white border border-slate-200 p-8 overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.04] hover:shadow-[0_0_25px_rgba(80,140,255,0.25)] hover:border-blue-400"
+                    className="group relative rounded-2xl bg-white border border-slate-200 p-8 overflow-hidden transition-all duration-700 ease-\[cubic-bezier(0.22,1,0.36,1)\] hover:scale-[1.04] hover:shadow-[0_0_25px_rgba(80,140,255,0.25)] hover:border-blue-400"
                   >
                     {/* smooth gradient highlight behind */}
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-50/40 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out z-0"></div>
 
                     <div className="relative z-10 flex flex-col h-full justify-between">
                       <div>
-                        <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 text-white group-hover:from-blue-600 group-hover:to-indigo-500 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110 group-hover:shadow-[0_0_18px_rgba(59,130,246,0.6)]">
+                        <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 text-white group-hover:from-blue-600 group-hover:to-indigo-500 transition-all duration-700 ease-\[cubic-bezier(0.22,1,0.36,1)\] group-hover:scale-110 group-hover:shadow-[0_0_18px_rgba(59,130,246,0.6)]">
                           <Icon className="h-6 w-6" />
                         </div>
 
@@ -102,15 +102,15 @@ export default function HomePage() {
                       {/* Animated Button */}
                       <Link
                         href="/services"
-                        className="relative mt-8 inline-flex justify-center items-center px-8 py-3 text-sm font-medium rounded-xl border border-blue-700 text-blue-800 overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group/button"
+                        className="relative mt-8 inline-flex justify-center items-center px-8 py-3 text-sm font-medium rounded-xl border border-blue-700 text-blue-800 overflow-hidden transition-all duration-700 ease-\[cubic-bezier(0.22,1,0.36,1)\] group/button"
                       >
                         {/* gradient background on hover */}
-                        <span className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 group-hover/button:opacity-100 transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"></span>
+                        <span className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 group-hover/button:opacity-100 transition-opacity duration-700 ease-\[cubic-bezier(0.22,1,0.36,1)\]"></span>
                         <span className="relative z-10 group-hover/button:text-white transition-colors duration-500">
                           Learn More
                         </span>
                         {/* glowing border animation */}
-                        <span className="absolute inset-0 rounded-xl border border-transparent group-hover/button:border-blue-400 group-hover/button:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"></span>
+                        <span className="absolute inset-0 rounded-xl border border-transparent group-hover/button:border-blue-400 group-hover/button:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-700 ease-\[cubic-bezier(0.22,1,0.36,1)\]"></span>
                       </Link>
                     </div>
                   </div>
