@@ -232,7 +232,7 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-2 text-xs text-slate-500">
               <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-              <span>10+ Years Experience</span>
+              <span>6+ Years Experience</span>
             </div>
             <div className="flex items-center gap-2 text-xs text-slate-500">
               <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
