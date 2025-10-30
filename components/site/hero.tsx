@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { ArrowRight, Send, X, CheckCircle, AlertCircle } from "lucide-react"
 
@@ -10,16 +10,58 @@ export default function Hero() {
   const [submitMessage, setSubmitMessage] = useState("")
   const [isVisible, setIsVisible] = useState(false)
   const [popupAnimation, setPopupAnimation] = useState("")
+  const [videoLoaded, setVideoLoaded] = useState(false)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     service: ""
   })
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     setIsVisible(true)
+    
+    // Enhanced video play with multiple attempts
+    const ensureVideoPlay = async () => {
+      const video = videoRef.current
+      if (!video) return
+
+      try {
+        // Wait for video to be ready
+        await video.play()
+        console.log("Video playing smoothly")
+      } catch (error) {
+        console.log("First play attempt failed, retrying...", error)
+        
+        // Second attempt with user gesture simulation
+        setTimeout(async () => {
+          try {
+            video.muted = true
+            await video.play()
+            console.log("Video playing on second attempt")
+          } catch (error2) {
+            console.log("Second attempt failed, using fallback", error2)
+          }
+        }, 1000)
+      }
+    }
+
+    ensureVideoPlay()
   }, [])
+
+  const handleVideoLoad = () => {
+    setVideoLoaded(true)
+    const video = videoRef.current
+    if (video) {
+      video.play().catch(e => console.log("Auto-play prevented:", e))
+    }
+  }
+
+  const handleVideoError = () => {
+    console.error("Video failed to load")
+    // You can set a state to show fallback content here
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -81,65 +123,87 @@ export default function Hero() {
     }, 300)
   }
 
+  const forcePlayVideo = () => {
+    const video = videoRef.current
+    if (video) {
+      video.play().then(() => {
+        console.log("Video manually started")
+      }).catch(error => {
+        console.log("Manual play failed:", error)
+      })
+    }
+  }
+
   return (
     <>
       <section className="relative overflow-hidden min-h-screen flex items-center justify-center">
-        {/* Advanced Background with responsive plane positioning */}
+        {/* Optimized Flying Airplane Video Background */}
         <div className="absolute inset-0 -z-10">
-          {/* Responsive plane background image */}
-          <div 
-            className="absolute inset-0 bg-cover bg-no-repeat"
-            style={{
-              backgroundImage: "url('https://wallpapercave.com/wp/wp2574285.jpg')",
-              backgroundPosition: "center",
-              backgroundSize: "cover",
+          {/* HD Flying Airplane Video - Optimized for Smooth Playback */}
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            onLoadedData={handleVideoLoad}
+            onError={handleVideoError}
+            className="object-cover w-full h-full min-w-[100vw] min-h-[100vh]"
+            style={{ 
+              filter: "brightness(0.85) contrast(1.1)",
+              transform: "scale(1.02)",
+              willChange: "transform" // Performance optimization
             }}
-          />
+          >
+            <source src="/videos/fly-aeroplane.mp4" type="video/mp4" />
+            <source src="/videos/fly-aeroplane.webm" type="video/webm" />
+            {/* Fallback gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-cyan-800 to-teal-900" />
+          </video>
           
-          {/* Dynamic gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-blue-900/40 to-cyan-800/50" />
+          {/* Optimized overlay for perfect text visibility */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black/75 via-blue-900/40 to-cyan-800/30" />
           
-          {/* Animated floating gradient orbs */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] h-[90vw] sm:w-[800px] sm:h-[800px] bg-blue-400/20 blur-3xl rounded-full animate-pulse" />
-          <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] sm:w-[500px] sm:h-[500px] bg-cyan-300/15 blur-3xl rounded-full animate-float-slow" />
-          <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[50vw] h-[50vw] sm:w-[400px] sm:h-[400px] bg-purple-400/10 blur-3xl rounded-full animate-float-delayed" />
-          
-          {/* Animated grid pattern overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
+          {/* Clean background elements */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vw] sm:w-[500px] sm:h-[500px] bg-blue-500/5 blur-3xl rounded-full" />
+          <div className="absolute top-1/3 right-1/4 w-[40vw] h-[40vw] sm:w-[300px] sm:h-[300px] bg-cyan-400/5 blur-3xl rounded-full" />
         </div>
 
-        {/* Main content container with advanced animations */}
+        {/* Main Content - Enhanced Readability */}
         <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 text-center">
-          {/* Headline with staggered animation */}
+          {/* Headline with strong contrast */}
           <div className={`flex flex-col items-center justify-center w-full transition-all duration-700 ease-out ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-tight text-center">
               Global Services{" "}
-              <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent block sm:inline animate-gradient">
+              <span className="bg-gradient-to-r from-blue-300 via-cyan-300 to-teal-300 bg-clip-text text-transparent block sm:inline drop-shadow-2xl">
                 Immigration
               </span>
             </h1>
           </div>
 
-          {/* Subtitle with delayed animation */}
+          {/* Subtitle with backdrop for clarity */}
           <div className={`flex justify-center w-full mt-6 sm:mt-8 transition-all duration-700 ease-out delay-200 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
-            <p className="text-lg sm:text-xl md:text-2xl text-white/95 leading-relaxed max-w-3xl text-center px-4">
-              Expert guidance for{" "}
-              <span className="text-cyan-300 font-bold">work visas</span>,{" "}
-              <span className="text-cyan-300 font-bold">study permits</span>,{" "}
-              <span className="text-cyan-300 font-bold">permanent residency</span>, and{" "}
-              <span className="text-cyan-300 font-bold">citizenship</span>.
-              <br className="hidden sm:block" />
-              <span className="text-white/100 text-base sm:text-lg mt-2 block">
-                Navigate the complex immigration process with clarity and confidence.
-              </span>
-            </p>
+            <div className="bg-black/30 backdrop-blur-md rounded-2xl p-6 border border-white/10">
+              <p className="text-lg sm:text-xl md:text-2xl text-white leading-relaxed max-w-3xl text-center">
+                Expert guidance for{" "}
+                <span className="text-cyan-200 font-bold drop-shadow-lg">work visas</span>,{" "}
+                <span className="text-cyan-200 font-bold drop-shadow-lg">study permits</span>,{" "}
+                <span className="text-cyan-200 font-bold drop-shadow-lg">permanent residency</span>, and{" "}
+                <span className="text-cyan-200 font-bold drop-shadow-lg">citizenship</span>.
+                <br className="hidden sm:block" />
+                <span className="text-white text-base sm:text-lg mt-3 block font-semibold">
+                  Navigate the complex immigration process with clarity and confidence.
+                </span>
+              </p>
+            </div>
           </div>
 
-          {/* Buttons with hover animations */}
+          {/* Action Buttons */}
           <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-8 sm:mt-12 px-4 transition-all duration-700 ease-out delay-300 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
@@ -147,18 +211,22 @@ export default function Hero() {
               onClick={openPopup}
               className="group inline-flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 px-8 sm:px-10 py-4 text-base sm:text-lg font-bold text-white shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 hover:from-blue-700 hover:to-cyan-700 w-full sm:w-auto"
             >
-              <span className="group-hover:translate-x-1 transition-transform duration-300">Contact Us</span>
+              <span className="group-hover:translate-x-1 transition-transform duration-300">
+                Contact Us
+              </span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
             </button>
             <Link
               href="/services"
-              className="group inline-flex items-center justify-center gap-3 rounded-xl border-2 border-white/80 px-8 sm:px-10 py-4 text-base sm:text-lg font-bold text-white hover:bg-white/10 hover:border-white transition-all duration-300 transform hover:scale-105 w-full sm:w-auto text-center"
+              className="group inline-flex items-center justify-center gap-3 rounded-xl border-2 border-white px-8 sm:px-10 py-4 text-base sm:text-lg font-bold text-white hover:bg-white/10 transition-all duration-300 transform hover:scale-105 w-full sm:w-auto text-center"
             >
-              <span className="group-hover:translate-x-1 transition-transform duration-300">Explore Services</span>
+              <span className="group-hover:translate-x-1 transition-transform duration-300">
+                Explore Services
+              </span>
             </Link>
           </div>
 
-          {/* Stats with staggered animation */}
+          {/* Stats Section */}
           <div className={`flex justify-center w-full mt-12 sm:mt-16 transition-all duration-700 ease-out delay-500 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
@@ -171,16 +239,12 @@ export default function Hero() {
               ].map((stat, index) => (
                 <div
                   key={stat.label}
-                  className="bg-white/20 backdrop-blur-lg rounded-2xl p-4 sm:p-6 text-center border border-white/30 shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 flex flex-col items-center justify-center"
-                  style={{ 
-                    animationDelay: `${index * 100 + 600}ms`,
-                    transitionDelay: `${index * 50}ms`
-                  }}
+                  className="bg-white/30 backdrop-blur-lg rounded-2xl p-4 sm:p-6 text-center border border-white/50 shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 flex flex-col items-center justify-center"
                 >
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-black text-white">
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-black text-white drop-shadow-2xl">
                     {stat.value}
                   </div>
-                  <div className="mt-2 text-xs sm:text-sm font-bold text-white/90 uppercase tracking-wide text-center">
+                  <div className="mt-2 text-xs sm:text-sm font-bold text-white uppercase tracking-wide text-center drop-shadow-lg">
                     {stat.label}
                   </div>
                 </div>
@@ -189,19 +253,30 @@ export default function Hero() {
           </div>
         </div>
 
+        {/* Video Status Indicator (hidden by default) */}
+        {!videoLoaded && (
+          <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2">
+            <button
+              onClick={forcePlayVideo}
+              className="bg-black/50 text-white px-4 py-2 rounded-lg backdrop-blur-sm border border-white/30 hover:bg-black/70 transition-all"
+            >
+              ▶ Play Video
+            </button>
+          </div>
+        )}
+
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse"></div>
+          <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </section>
 
-      {/* Enhanced Popup Form with Animations */}
+      {/* Popup Form (unchanged) */}
       {showPopup && (
         <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xl ${popupAnimation.includes('animate-in') ? 'animate-in fade-in duration-300 ease-out' : 'animate-out fade-out duration-300 ease-out'}`}>
           <div className={`relative bg-gradient-to-br from-white to-slate-50 rounded-3xl shadow-2xl w-full max-w-md transform ${popupAnimation} duration-300 ease-out mx-auto border border-white/20`}>
-            {/* Close Button */}
             <button
               onClick={closePopup}
               className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 hover:bg-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 hover:rotate-90"
@@ -209,9 +284,6 @@ export default function Hero() {
               <X className="h-5 w-5 text-slate-600" />
             </button>
 
-
-
-            {/* Popup Content */}
             <div className="p-6 sm:p-8">
               <div className="text-center mb-6 animate-in fade-in duration-500 delay-200">
                 <h3 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
@@ -333,33 +405,6 @@ export default function Hero() {
           </div>
         </div>
       )}
-
-      {/* Add custom animations to global CSS */}
-      <style jsx global>{`
-        @keyframes float-slow {
-          0%, 100% { transform: translateY(0px) translateX(0px); }
-          50% { transform: translateY(-20px) translateX(10px); }
-        }
-        @keyframes float-delayed {
-          0%, 100% { transform: translateY(0px) translateX(0px); }
-          50% { transform: translateY(15px) translateX(-10px); }
-        }
-        @keyframes gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animate-float-slow {
-          animation: float-slow 6s ease-in-out infinite;
-        }
-        .animate-float-delayed {
-          animation: float-delayed 8s ease-in-out infinite;
-        }
-        .animate-gradient {
-          animation: gradient 3s ease infinite;
-          background-size: 200% 200%;
-        }
-      `}</style>
     </>
   )
 }
