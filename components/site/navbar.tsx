@@ -25,13 +25,14 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const menuItems = [
-    { href: "/", label: "Home" },
-    { href: "/services", label: "Services", hasDropdown: true },
-    { href: "/about", label: "About Us" },
-    { href: "/process", label: "Our Process" },
-    { href: "/contact", label: "Contact" },
-  ];
+const menuItems = [
+  { href: "/", label: "Home" },
+  { href: "/services", label: "Services", hasDropdown: true },
+  { href: "/about", label: "About Us" },
+  { href: "/process", label: "Our Process" },
+  { href: "/faq", label: "FAQ" }, // Simple link, no dropdown
+  { href: "/contact", label: "Contact" },
+];
 
   const services = [
     { id: "tourist-visa", title: "Tourist Visa", icon: "🌍" },
