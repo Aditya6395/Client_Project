@@ -218,6 +218,9 @@ export default function Footer() {
               <Link href="/terms" className="hover:text-white transition-colors duration-300">
                 Terms of Service
               </Link>
+              <Link href="/faq" className="hover:text-white transition-colors duration-300">
+                FAQs
+              </Link>
               <Link href="/sitemap" className="hover:text-white transition-colors duration-300">
                 Sitemap
               </Link>
