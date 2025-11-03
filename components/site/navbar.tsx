@@ -25,14 +25,14 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-const menuItems = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Services", hasDropdown: true },
-  { href: "/about", label: "About Us" },
-  { href: "/process", label: "Our Process" },
-  { href: "/faq", label: "FAQ" }, // Simple link, no dropdown
-  { href: "/contact", label: "Contact" },
-];
+  const menuItems = [
+    { href: "/", label: "Home" },
+    { href: "/services", label: "Services", hasDropdown: true },
+    { href: "/about", label: "About Us" },
+    { href: "/process", label: "Our Process" },
+    { href: "/faq", label: "FAQ" },
+    { href: "/contact", label: "Contact" },
+  ];
 
   const services = [
     { id: "tourist-visa", title: "Tourist Visa", icon: "🌍" },
@@ -50,7 +50,6 @@ const menuItems = [
   const remainingServices = services.slice(4);
 
   const handleServicesMouseLeave = () => {
-    // Don't close immediately to allow clicking on "View More"
     setTimeout(() => {
       if (!dropdownRef.current?.matches(':hover')) {
         setIsServicesOpen(false);
@@ -59,9 +58,29 @@ const menuItems = [
     }, 100);
   };
 
-  // FIXED: Mobile view more handler
+  // Mobile view more handler
   const handleMobileViewMore = () => {
     setShowAllServices(!showAllServices);
+  };
+
+  // Close mobile menu when clicking a link
+  const closeMobileMenu = () => {
+    setIsOpen(false);
+    setIsServicesOpen(false);
+    setShowAllServices(false);
+  };
+
+  // Navigate to services page (full page)
+  const navigateToServices = () => {
+    closeMobileMenu();
+  };
+
+  // Navigate to specific service section (for desktop hover)
+  const navigateToServiceSection = (serviceId: string) => {
+    // This is for desktop hover dropdown - navigate to section
+    window.location.href = `/services#${serviceId}`;
+    setIsServicesOpen(false);
+    setShowAllServices(false);
   };
 
   return (
@@ -93,55 +112,83 @@ const menuItems = [
           <div className="hidden lg:flex lg:items-center lg:gap-8" ref={dropdownRef}>
             {menuItems.map((item) => (
               <div key={item.href} className="relative group/nav-item">
-                <Link
-                  href={item.href}
-                  className="group relative text-lg font-semibold text-white transition-all duration-500 flex items-center gap-1 py-2 px-3 rounded-xl"
-                  onMouseEnter={() => {
-                    setActiveHover(item.label);
-                    if (item.hasDropdown) {
+                {item.hasDropdown ? (
+                  // Services dropdown trigger
+                  <div
+                    className="group relative text-lg font-semibold text-white transition-all duration-500 flex items-center gap-1 py-2 px-3 rounded-xl cursor-pointer"
+                    onMouseEnter={() => {
+                      setActiveHover(item.label);
                       setIsServicesOpen(true);
                       setShowAllServices(false);
-                    }
-                  }}
-                  onMouseLeave={() => {
-                    setActiveHover(null);
-                  }}
-                  onClick={() => {
-                    if (item.hasDropdown) setIsServicesOpen(!isServicesOpen);
-                  }}
-                >
-                  {/* Animated Background */}
-                  <div className={`absolute inset-0 bg-gradient-to-r from-amber-400/20 via-orange-400/20 to-red-400/20 rounded-xl transition-all duration-500 ease-out ${
-                    activeHover === item.label ? 'opacity-100 scale-105' : 'opacity-0 scale-95'
-                  }`}></div>
-                  
-                  <span className={`relative z-10 transition-all duration-300 flex items-center gap-2 ${
-                    activeHover === item.label 
-                      ? 'text-amber-300 transform translate-y-[-2px] drop-shadow-lg' 
-                      : 'text-white hover:text-amber-200'
-                  }`}>
-                    {item.label}
-                    {item.hasDropdown && (
+                    }}
+                    onMouseLeave={() => {
+                      setActiveHover(null);
+                    }}
+                  >
+                    {/* Animated Background */}
+                    <div className={`absolute inset-0 bg-gradient-to-r from-amber-400/20 via-orange-400/20 to-red-400/20 rounded-xl transition-all duration-500 ease-out ${
+                      activeHover === item.label ? 'opacity-100 scale-105' : 'opacity-0 scale-95'
+                    }`}></div>
+                    
+                    <span className={`relative z-10 transition-all duration-300 flex items-center gap-2 ${
+                      activeHover === item.label 
+                        ? 'text-amber-300 transform translate-y-[-2px] drop-shadow-lg' 
+                        : 'text-white hover:text-amber-200'
+                    }`}>
+                      {item.label}
                       <ChevronDown
                         className={`h-4 w-4 transition-all duration-500 ${
                           isServicesOpen ? "rotate-180 text-amber-300" : "group-hover/nav-item:rotate-180"
                         }`}
                       />
-                    )}
-                  </span>
+                    </span>
 
-                  {/* Animated Underline */}
-                  <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 rounded-full transition-all duration-700 ease-out ${
-                    activeHover === item.label ? 'w-full opacity-100' : 'w-0 opacity-0'
-                  }`}></div>
-
-                  {/* Floating Particles Effect */}
-                  <div className="absolute inset-0 overflow-hidden rounded-xl">
-                    <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 transition-all duration-1000 ${
-                      activeHover === item.label ? 'translate-x-full' : '-translate-x-full'
+                    {/* Animated Underline */}
+                    <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 rounded-full transition-all duration-700 ease-out ${
+                      activeHover === item.label ? 'w-full opacity-100' : 'w-0 opacity-0'
                     }`}></div>
+
+                    {/* Floating Particles Effect */}
+                    <div className="absolute inset-0 overflow-hidden rounded-xl">
+                      <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 transition-all duration-1000 ${
+                        activeHover === item.label ? 'translate-x-full' : '-translate-x-full'
+                      }`}></div>
+                    </div>
                   </div>
-                </Link>
+                ) : (
+                  // Regular menu items
+                  <Link
+                    href={item.href}
+                    className="group relative text-lg font-semibold text-white transition-all duration-500 flex items-center gap-1 py-2 px-3 rounded-xl"
+                    onMouseEnter={() => setActiveHover(item.label)}
+                    onMouseLeave={() => setActiveHover(null)}
+                  >
+                    {/* Animated Background */}
+                    <div className={`absolute inset-0 bg-gradient-to-r from-amber-400/20 via-orange-400/20 to-red-400/20 rounded-xl transition-all duration-500 ease-out ${
+                      activeHover === item.label ? 'opacity-100 scale-105' : 'opacity-0 scale-95'
+                    }`}></div>
+                    
+                    <span className={`relative z-10 transition-all duration-300 ${
+                      activeHover === item.label 
+                        ? 'text-amber-300 transform translate-y-[-2px] drop-shadow-lg' 
+                        : 'text-white hover:text-amber-200'
+                    }`}>
+                      {item.label}
+                    </span>
+
+                    {/* Animated Underline */}
+                    <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 rounded-full transition-all duration-700 ease-out ${
+                      activeHover === item.label ? 'w-full opacity-100' : 'w-0 opacity-0'
+                    }`}></div>
+
+                    {/* Floating Particles Effect */}
+                    <div className="absolute inset-0 overflow-hidden rounded-xl">
+                      <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 transition-all duration-1000 ${
+                        activeHover === item.label ? 'translate-x-full' : '-translate-x-full'
+                      }`}></div>
+                    </div>
+                  </Link>
+                )}
 
                 {/* Advanced Services Dropdown */}
                 {item.hasDropdown && isServicesOpen && (
@@ -162,14 +209,10 @@ const menuItems = [
                     <div className="py-2">
                       {/* Initial Services */}
                       {initialServices.map((srv, index) => (
-                        <Link
+                        <button
                           key={srv.id}
-                          href={`/services#${srv.id}`}
-                          className="group/service flex items-center gap-4 px-4 py-3 rounded-xl text-slate-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-cyan-50 hover:text-emerald-600 transition-all duration-300 transform hover:translate-x-2 hover:shadow-lg border border-transparent hover:border-emerald-100 mx-2"
-                          onClick={() => {
-                            setIsServicesOpen(false);
-                            setShowAllServices(false);
-                          }}
+                          onClick={() => navigateToServiceSection(srv.id)}
+                          className="group/service flex items-center gap-4 px-4 py-3 rounded-xl text-slate-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-cyan-50 hover:text-emerald-600 transition-all duration-300 transform hover:translate-x-2 hover:shadow-lg border border-transparent hover:border-emerald-100 mx-2 w-full text-left"
                           style={{
                             animationDelay: `${index * 50}ms`,
                             animation: `slideInRight 0.3s ease-out ${index * 50}ms both`
@@ -184,7 +227,7 @@ const menuItems = [
                           <div className="ml-auto opacity-0 group-hover/service:opacity-100 transition-all duration-300 transform translate-x-[-10px] group-hover/service:translate-x-0">
                             <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
                           </div>
-                        </Link>
+                        </button>
                       ))}
 
                       {/* Remaining Services with expand/collapse */}
@@ -192,14 +235,10 @@ const menuItems = [
                         <>
                           {/* Show remaining services when expanded */}
                           {showAllServices && remainingServices.map((srv, index) => (
-                            <Link
+                            <button
                               key={srv.id}
-                              href={`/services#${srv.id}`}
-                              className="group/service flex items-center gap-4 px-4 py-3 rounded-xl text-slate-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-cyan-50 hover:text-emerald-600 transition-all duration-300 transform hover:translate-x-2 hover:shadow-lg border border-transparent hover:border-emerald-100 mx-2"
-                              onClick={() => {
-                                setIsServicesOpen(false);
-                                setShowAllServices(false);
-                              }}
+                              onClick={() => navigateToServiceSection(srv.id)}
+                              className="group/service flex items-center gap-4 px-4 py-3 rounded-xl text-slate-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-cyan-50 hover:text-emerald-600 transition-all duration-300 transform hover:translate-x-2 hover:shadow-lg border border-transparent hover:border-emerald-100 mx-2 w-full text-left"
                               style={{
                                 animationDelay: `${index * 50}ms`,
                                 animation: `slideInRight 0.3s ease-out ${index * 50}ms both`
@@ -214,7 +253,7 @@ const menuItems = [
                               <div className="ml-auto opacity-0 group-hover/service:opacity-100 transition-all duration-300 transform translate-x-[-10px] group-hover/service:translate-x-0">
                                 <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
                               </div>
-                            </Link>
+                            </button>
                           ))}
 
                           {/* View More / View Less Button */}
@@ -236,6 +275,20 @@ const menuItems = [
                           </button>
                         </>
                       )}
+
+                      {/* View All Services Link */}
+                      <div className="px-4 pt-2 border-t border-gray-100">
+                        <Link
+                          href="/services"
+                          className="block text-center bg-gradient-to-r from-emerald-500 to-cyan-500 text-white py-3 px-4 rounded-lg font-semibold hover:from-emerald-600 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                          onClick={() => {
+                            setIsServicesOpen(false);
+                            setShowAllServices(false);
+                          }}
+                        >
+                          View All Services
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -257,22 +310,23 @@ const menuItems = [
           </button>
         </div>
 
-        {/* ADVANCED MOBILE MENU - FIXED VIEW MORE FUNCTIONALITY */}
+        {/* ADVANCED MOBILE MENU - FIXED NAVIGATION */}
         {isOpen && (
-          <div className="lg:hidden pb-4 space-y-2 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 mx-2 mt-2 overflow-hidden animate-in slide-in-from-top-0 duration-300">
+          <div className="lg:hidden pb-4 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 mx-2 mt-2 overflow-hidden animate-in slide-in-from-top-0 duration-300">
             {/* Mobile Menu Header */}
             <div className="bg-gradient-to-r from-emerald-600 to-cyan-600 p-4">
               <h3 className="text-white font-bold text-lg">Navigation Menu</h3>
             </div>
             
-            <div className="p-3 space-y-1">
+            <div className="p-3 space-y-2">
               {menuItems.map((item, index) => (
                 <div key={item.href} className="overflow-hidden">
                   {!item.hasDropdown ? (
+                    // Regular menu items
                     <Link
                       href={item.href}
                       className="block px-4 py-4 text-lg font-semibold text-slate-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-cyan-50 hover:text-emerald-600 rounded-xl transition-all duration-300 transform hover:translate-x-3 hover:shadow-lg border border-transparent hover:border-emerald-100"
-                      onClick={() => setIsOpen(false)}
+                      onClick={closeMobileMenu}
                       style={{
                         animationDelay: `${index * 100}ms`,
                         animation: `slideInLeft 0.4s ease-out ${index * 100}ms both`
@@ -281,95 +335,115 @@ const menuItems = [
                       {item.label}
                     </Link>
                   ) : (
-                    <div className="rounded-xl overflow-hidden">
-                      <button
-                        className="w-full text-left px-4 py-4 text-lg font-semibold text-slate-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-cyan-50 hover:text-emerald-600 rounded-xl transition-all duration-300 flex justify-between items-center transform hover:translate-x-3"
-                        onClick={() => {
-                          setIsServicesOpen(!isServicesOpen);
-                          // Reset showAllServices when opening services
-                          if (!isServicesOpen) {
-                            setShowAllServices(false);
-                          }
-                        }}
-                        style={{
-                          animationDelay: `${index * 100}ms`,
-                          animation: `slideInLeft 0.4s ease-out ${index * 100}ms both`
-                        }}
-                      >
-                        {item.label}
-                        <ChevronDown
-                          className={`h-5 w-5 transition-all duration-500 ${
-                            isServicesOpen ? "rotate-180 text-emerald-600" : ""
-                          }`}
-                        />
-                      </button>
+                    // Services dropdown item
+                    <div className="rounded-xl overflow-hidden border border-gray-100">
+                      {/* Services dropdown trigger */}
+                      <div className="flex justify-between items-center">
+                        <Link
+                          href="/services"
+                          className="flex-1 px-4 py-4 text-lg font-semibold text-slate-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-cyan-50 hover:text-emerald-600 rounded-xl transition-all duration-300"
+                          onClick={closeMobileMenu}
+                          style={{
+                            animationDelay: `${index * 100}ms`,
+                            animation: `slideInLeft 0.4s ease-out ${index * 100}ms both`
+                          }}
+                        >
+                          {item.label}
+                        </Link>
+                        <button
+                          className="px-4 py-4 text-slate-700 hover:text-emerald-600 transition-all duration-300"
+                          onClick={() => {
+                            setIsServicesOpen(!isServicesOpen);
+                            if (!isServicesOpen) {
+                              setShowAllServices(false);
+                            }
+                          }}
+                        >
+                          <ChevronDown
+                            className={`h-5 w-5 transition-all duration-500 ${
+                              isServicesOpen ? "rotate-180 text-emerald-600" : ""
+                            }`}
+                          />
+                        </button>
+                      </div>
                       
-                      {/* FIXED: Mobile Services Dropdown */}
+                      {/* Mobile Services Dropdown Content */}
                       {isServicesOpen && (
-                        <div className="pl-6 mt-1 space-y-1 animate-in fade-in-0 duration-300">
-                          {/* Show initial services */}
-                          {initialServices.map((srv, srvIndex) => (
-                            <Link
-                              key={srv.id}
-                              href={`/services#${srv.id}`}
-                              className="flex items-center gap-3 text-slate-600 py-3 px-4 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all duration-300 transform hover:translate-x-2"
-                              onClick={() => {
-                                setIsServicesOpen(false);
-                                setIsOpen(false);
-                              }}
-                              style={{
-                                animationDelay: `${srvIndex * 50}ms`,
-                                animation: `slideInRight 0.3s ease-out ${srvIndex * 50}ms both`
-                              }}
-                            >
-                              <span className="text-xl">{srv.icon}</span>
-                              <span>{srv.title}</span>
-                            </Link>
-                          ))}
+                        <div className="bg-gray-50/80 border-t border-gray-200 mx-2 rounded-lg overflow-hidden animate-in fade-in-0 duration-300">
+                          <div className="py-2 space-y-1">
+                            <div className="px-3 py-2">
+                              <p className="text-sm text-gray-600 font-medium">Quick Service Links:</p>
+                            </div>
+                            
+                            {/* All Services as quick links */}
+                            {initialServices.map((srv, srvIndex) => (
+                              <Link
+                                key={srv.id}
+                                href="/services"
+                                className="flex items-center gap-3 text-slate-600 py-3 px-4 hover:text-emerald-600 hover:bg-white rounded-lg transition-all duration-300 transform hover:translate-x-2 border-l-2 border-transparent hover:border-emerald-400"
+                                onClick={closeMobileMenu}
+                                style={{
+                                  animationDelay: `${srvIndex * 50}ms`,
+                                  animation: `slideInRight 0.3s ease-out ${srvIndex * 50}ms both`
+                                }}
+                              >
+                                <span className="text-xl min-w-6 text-center">{srv.icon}</span>
+                                <span className="font-medium">{srv.title}</span>
+                              </Link>
+                            ))}
 
-                          {/* FIXED: Show remaining services when showAllServices is true */}
-                          {showAllServices && remainingServices.map((srv, srvIndex) => (
-                            <Link
-                              key={srv.id}
-                              href={`/services#${srv.id}`}
-                              className="flex items-center gap-3 text-slate-600 py-3 px-4 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all duration-300 transform hover:translate-x-2"
-                              onClick={() => {
-                                setIsServicesOpen(false);
-                                setIsOpen(false);
-                              }}
-                              style={{
-                                animationDelay: `${srvIndex * 50}ms`,
-                                animation: `slideInRight 0.3s ease-out ${srvIndex * 50}ms both`
-                              }}
-                            >
-                              <span className="text-xl">{srv.icon}</span>
-                              <span>{srv.title}</span>
-                            </Link>
-                          ))}
+                            {/* Remaining Services - Show when expanded */}
+                            {showAllServices && remainingServices.map((srv, srvIndex) => (
+                              <Link
+                                key={srv.id}
+                                href="/services"
+                                className="flex items-center gap-3 text-slate-600 py-3 px-4 hover:text-emerald-600 hover:bg-white rounded-lg transition-all duration-300 transform hover:translate-x-2 border-l-2 border-transparent hover:border-emerald-400"
+                                onClick={closeMobileMenu}
+                                style={{
+                                  animationDelay: `${srvIndex * 50}ms`,
+                                  animation: `slideInRight 0.3s ease-out ${srvIndex * 50}ms both`
+                                }}
+                              >
+                                <span className="text-xl min-w-6 text-center">{srv.icon}</span>
+                                <span className="font-medium">{srv.title}</span>
+                              </Link>
+                            ))}
 
-                          {/* FIXED: View More / View Less Button for Mobile */}
-                          {remainingServices.length > 0 && (
-                            <button
-                              onClick={handleMobileViewMore}
-                              className="flex items-center justify-between w-full text-slate-600 py-3 px-4 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all duration-300 transform hover:translate-x-2"
-                              style={{
-                                animationDelay: `${initialServices.length * 50}ms`,
-                                animation: `slideInRight 0.3s ease-out ${initialServices.length * 50}ms both`
-                              }}
-                            >
-                              <div className="flex items-center gap-3">
-                                <span className="text-xl">📋</span>
-                                <span className="font-medium">
-                                  {showAllServices ? 'View Less' : `View ${remainingServices.length} More`}
-                                </span>
-                              </div>
-                              <ChevronRight 
-                                className={`h-4 w-4 transition-transform duration-300 ${
-                                  showAllServices ? 'rotate-90' : ''
-                                }`} 
-                              />
-                            </button>
-                          )}
+                            {/* View More / View Less Button for Mobile */}
+                            {remainingServices.length > 0 && (
+                              <button
+                                onClick={handleMobileViewMore}
+                                className="flex items-center justify-between w-full text-slate-600 py-3 px-4 hover:text-emerald-600 hover:bg-white rounded-lg transition-all duration-300 transform hover:translate-x-2 border-l-2 border-transparent hover:border-emerald-400"
+                                style={{
+                                  animationDelay: `${initialServices.length * 50}ms`,
+                                  animation: `slideInRight 0.3s ease-out ${initialServices.length * 50}ms both`
+                                }}
+                              >
+                                <div className="flex items-center gap-3">
+                                  <span className="text-xl min-w-6 text-center">📋</span>
+                                  <span className="font-medium">
+                                    {showAllServices ? 'View Less' : `View ${remainingServices.length} More`}
+                                  </span>
+                                </div>
+                                <ChevronRight 
+                                  className={`h-4 w-4 transition-transform duration-300 ${
+                                    showAllServices ? 'rotate-90' : ''
+                                  }`} 
+                                />
+                              </button>
+                            )}
+
+                            {/* Main Services Page Link */}
+                            <div className="pt-2 border-t border-gray-200 mx-2">
+                              <Link
+                                href="/services"
+                                className="block text-center bg-gradient-to-r from-emerald-500 to-cyan-500 text-white py-3 px-4 rounded-lg font-semibold hover:from-emerald-600 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                                onClick={closeMobileMenu}
+                              >
+                                View All Services Details
+                              </Link>
+                            </div>
+                          </div>
                         </div>
                       )}
                     </div>
