@@ -163,7 +163,7 @@ export default function ProcessPage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center max-w-2xl mx-auto mb-12">
               <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 animate-fadeIn">
-                Why Our Process Works
+                How our team works
               </h2>
               <p className="mt-4 text-lg text-slate-600 animate-fadeIn delay-200">
                 Our systematic approach ensures the best possible outcomes

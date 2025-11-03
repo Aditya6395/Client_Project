@@ -40,7 +40,7 @@ export default function Footer() {
             </div>
             
             <p className="text-sm leading-relaxed text-slate-400">
-              Your trusted partner for global immigration and travel solutions. 
+              Your trusted partner for global immigration and travel solutions. <br />
               Expert assistance for visas, PR, study, and work abroad programs.
             </p>
             
@@ -95,11 +95,11 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3">
               {[
-                { href: "/services#tourist-visa", label: "Tourist Visa", icon: Globe, desc: "Canada, Australia, US, UK, NZ, Schengen etc" },
+                { href: "/services#tourist-visa", label: "Tourist Visa", icon: Globe, desc: "Canada, Australia, US, UK, NZ, Schengen, etc" },
                 { href: "/services#pr", label: "Permanent Residency", icon: Home, desc: "Canada & Australia PR pathways" },
                 { href: "/services#spouse-visa", label: "Spouse Visa", icon: Heart, desc: "Canada, NZ, Australia, US" },
                 { href: "/services#study-visa", label: "Study Visa", icon: GraduationCap, desc: "USA, Canada, UK, Australia" },
-                { href: "/services#business-visa", label: "Business Visa", icon: Building2, desc: "US, UK, Canada, Australia etc" },
+                { href: "/services#business-visa", label: "Business Visa", icon: Building2, desc: "US, UK, Canada, Australia, etc" },
                 { href: "/services#work-visa", label: "Work Visa", icon: Briefcase, desc: "Canada, NZ, Australia, Schengen" },
                 { href: "/services#flight-ticketing", label: "Flight Ticketing", icon: Plane, desc: "International & domestic" },
                 { href: "/services#travel-insurance", label: "Travel Insurance", icon: ShieldCheck, desc: "Comprehensive coverage" }
@@ -164,7 +164,7 @@ export default function Footer() {
                   href="tel:8860028328" 
                   className="text-slate-400 group-hover:text-white transition-all duration-300 transform group-hover:translate-x-1"
                 >
-                  +91 88600 28328
+                  +91 7303922339
                 </a>
               </li>
               
@@ -221,8 +221,8 @@ export default function Footer() {
               <Link href="/faq" className="hover:text-white transition-colors duration-300">
                 FAQs
               </Link>
-              <Link href="/sitemap" className="hover:text-white transition-colors duration-300">
-                Sitemap
+              <Link href="/refund" className="hover:text-white transition-colors duration-300">
+                Refund Policy
               </Link>
             </div>
           </div>
