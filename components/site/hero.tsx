@@ -135,9 +135,9 @@ export default function Hero() {
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-tight text-center drop-shadow-2xl">
-              RV Global Services{" "}
+              RV Global Immigration{" "}
               <span className="bg-gradient-to-r from-blue-300 via-cyan-300 to-teal-300 bg-clip-text text-transparent block sm:inline drop-shadow-lg">
-                Immigration
+                Services
               </span>
             </h1>
           </div>
