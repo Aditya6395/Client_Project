@@ -62,7 +62,7 @@ export default function ServicesPage() {
         "Interview preparation & support",
         "Appeal process assistance"
       ],
-      stats: { successRate: 92, processingTime: "4-8 months", clients: 1200 },
+      stats: { successRate: 95, processingTime: "4-8 months", clients: 1200 },
       image: "https://static.vecteezy.com/system/resources/thumbnails/072/550/400/small/multigenerational-hispanic-family-portrait-in-autumn-park-smiling-together-photo.jpeg",
       countries: ["Canada", "USA", "Australia", "New Zealand"]
     },
@@ -94,9 +94,25 @@ export default function ServicesPage() {
         "Travel planning & itinerary setup",
         "Investor visa consultation"
       ],
-      stats: { successRate: 90, processingTime: "4-8 weeks", clients: 800 },
+      stats: { successRate: 93, processingTime: "4-8 weeks", clients: 800 },
       image: "https://www.withenvoy.com/wp-content/uploads/2022/09/investors-visa-meeting.jpg",
       countries: ["USA", "Canada", "UK", "Australia", "UAE", "Singapore"]
+    },
+        {
+      id: "work-visa",
+      icon: Briefcase,
+      title: "Work Visa & Employment Abroad",
+      description: "Work visa and permit assistance for Canada, New Zealand, Australia, UK, and Schengen countries with job placement support.",
+      features: [
+        "Work permit consultation",
+        "Visa filing & documentation",
+        "Interview preparation",
+        "Employer coordination support",
+        "Job search assistance"
+      ],
+      stats: { successRate: 97, processingTime: "2-4 months", clients: 2000 },
+      image: "https://img.freepik.com/free-photo/day-office-travel-agency_23-2150770001.jpg?semt=ais_hybrid&w=740&q=80",
+      countries: ["Canada", "Australia", "New Zealand", "UK", "Germany", "Netherlands"]
     },
     {
       id: "flight-ticketing",
@@ -129,22 +145,6 @@ export default function ServicesPage() {
       stats: { successRate: 100, processingTime: "Instant", clients: 4000 },
       image: "https://static.vecteezy.com/system/resources/previews/025/074/876/large_2x/protection-and-insurance-concept-car-home-and-health-preventing-and-evaluating-potential-business-investment-benefits-life-insurance-protect-your-family-and-loved-ones-from-accidents-free-photo.jpg",
       coverage: ["Medical", "Travel", "Accident", "Luggage", "Cancellation"]
-    },
-    {
-      id: "work-visa",
-      icon: Briefcase,
-      title: "Work Visa & Employment Abroad",
-      description: "Work visa and permit assistance for Canada, New Zealand, Australia, UK, and Schengen countries with job placement support.",
-      features: [
-        "Work permit consultation",
-        "Visa filing & documentation",
-        "Interview preparation",
-        "Employer coordination support",
-        "Job search assistance"
-      ],
-      stats: { successRate: 88, processingTime: "2-4 months", clients: 2000 },
-      image: "https://img.freepik.com/free-photo/day-office-travel-agency_23-2150770001.jpg?semt=ais_hybrid&w=740&q=80",
-      countries: ["Canada", "Australia", "New Zealand", "UK", "Germany", "Netherlands"]
     },
   ]
 
