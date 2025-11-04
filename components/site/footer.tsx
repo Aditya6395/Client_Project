@@ -248,8 +248,9 @@ export default function Footer() {
 
         {/* --- Footer Bottom --- */}
         <div className="pt-8 border-t border-gray-800">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-6 text-sm text-slate-400">
+<div className="flex flex-col md:flex-row justify-between items-start gap-4">
+  <div className="flex flex-col sm:flex-row items-start gap-2 sm:gap-6 text-sm text-slate-400 text-left">
+
               <Link href="/privacy" className="hover:text-white transition-colors duration-300">
                 Privacy Policy
               </Link>
