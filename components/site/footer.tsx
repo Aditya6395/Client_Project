@@ -187,7 +187,7 @@ export default function Footer() {
               <div className="flex gap-3">
                 {[
                   { icon: Facebook, href: "https://www.facebook.com/people/RV-Global-Immigration-Services/61582743210484/?rdid=Ept3sRoSsXW8Hyyd&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1Cfiz6Dc6c%2F", label: "Facebook", color: "hover:bg-blue-500" },
-                  { icon: Instagram, href: "https://www.instagram.com/visa_vikas?igsh=YjdvdTg1NXBmeXFm", label: "Instagram", color: "hover:bg-pink-500" },
+                  { icon: Instagram, href: "https://www.instagram.com/rv_globalimmigrationservices/?igsh=N3Y5NG5hdWFzdXR2#", label: "Instagram", color: "hover:bg-pink-500" },
                   { icon: Linkedin, href: "#", label: "LinkedIn", color: "hover:bg-blue-600" }
                 ].map((social) => (
                   <a
