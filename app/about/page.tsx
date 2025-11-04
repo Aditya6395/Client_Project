@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Navbar from "@/components/site/navbar"
 import Footer from "@/components/site/footer"
-import { Target, Eye, Award, Users, Globe, Heart, Star, Send, CheckCircle, ChevronLeft, ChevronRight, Play, Pause } from "lucide-react"
+import { Target, Eye, Award, Users, Globe, Heart, Star, Send, CheckCircle, ChevronLeft, ChevronRight, Play, Pause, Mail, Phone, MapPin, Clock, AlertCircle, X } from "lucide-react"
 
 // Core values array moved to the top to avoid initialization issues
 const coreValues = [
@@ -61,6 +61,20 @@ export default function AboutPage() {
   const [mounted, setMounted] = useState(false)
   const [activeSlide, setActiveSlide] = useState(0)
   const [autoPlay, setAutoPlay] = useState(true)
+  const [showContactPopup, setShowContactPopup] = useState(false)
+  const [popupAnimation, setPopupAnimation] = useState("")
+  const ourStoryRef = useRef<HTMLDivElement>(null)
+
+  // Contact form state
+  const [contactFormData, setContactFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitMessage, setSubmitMessage] = useState("")
 
   useEffect(() => {
     setMounted(true)
@@ -87,6 +101,74 @@ export default function AboutPage() {
 
   const goToSlide = (index: number) => {
     setActiveSlide(index)
+  }
+
+  // Contact form handlers
+  const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitMessage("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: contactFormData.name.trim(),
+          email: contactFormData.email.trim(),
+          phone: contactFormData.phone.trim(),
+          subject: contactFormData.subject || "General Inquiry",
+          message: contactFormData.message.trim(),
+        }),
+      });
+
+      const result = await res.json();
+      console.log("Contact form response:", result);
+
+      if (res.ok) {
+        setSubmitMessage("✅ Your message has been sent successfully!");
+        setContactFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
+        setTimeout(() => {
+          setPopupAnimation("animate-out fade-out zoom-out")
+          setTimeout(() => setShowContactPopup(false), 300)
+        }, 2000);
+      } else {
+        setSubmitMessage(`❌ Something went wrong: ${result.error || "Please try again."}`);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+      setSubmitMessage("⚠️ Network error. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setContactFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const openContactPopup = () => {
+    setShowContactPopup(true);
+    setPopupAnimation("animate-in fade-in zoom-in duration-300")
+    setSubmitMessage("");
+  }
+
+  const closeContactPopup = () => {
+    setPopupAnimation("animate-out fade-out zoom-out duration-300")
+    setTimeout(() => {
+      setShowContactPopup(false);
+      setSubmitMessage("");
+    }, 300)
+  }
+
+  const scrollToOurStory = () => {
+    ourStoryRef.current?.scrollIntoView({ behavior: 'smooth' });
   }
 
   return (
@@ -134,10 +216,16 @@ export default function AboutPage() {
 
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 animate-slide-up delay-500">
-                  <button className="bg-blue-600 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-blue-500/25">
+                  <button 
+                    onClick={openContactPopup}
+                    className="bg-blue-600 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-blue-500/25"
+                  >
                     Get Started Today
                   </button>
-                  <button className="border border-white/30 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-semibold hover:bg-white/10 transition-all duration-300 transform hover:scale-105 active:scale-95">
+                  <button 
+                    onClick={scrollToOurStory}
+                    className="border border-white/30 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-semibold hover:bg-white/10 transition-all duration-300 transform hover:scale-105 active:scale-95"
+                  >
                     Learn More
                   </button>
                 </div>
@@ -273,7 +361,7 @@ export default function AboutPage() {
         </section>
 
         {/* OUR STORY */}
-        <section className="py-12 sm:py-16 lg:py-20 xl:py-24 bg-white">
+        <section ref={ourStoryRef} className="py-12 sm:py-16 lg:py-20 xl:py-24 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-8 lg:gap-12 xl:gap-16 lg:grid-cols-2 items-center">
               <div className={`transition-all duration-700 delay-200 ease-out ${
@@ -290,17 +378,28 @@ export default function AboutPage() {
                     has evolved into a legacy of trust, excellence, and results.
                   </p>
                   <p className="animate-fade-in delay-400">
-                    Over the years, we've proudly helped more than <strong className="text-blue-600">1,500 clients</strong> from over
+                    Over the years, we have proudly helped more than <strong className="text-blue-600">1,500 clients</strong> from over
                     50 countries realize their goals of studying, working, and settling abroad.
                     Our certified consultants bring together decades of combined experience and
                     remain up to date with the latest immigration laws and policies.
                   </p>
                   <p className="animate-fade-in delay-500">
-                    We understand that immigration is about more than paperwork — it's about new opportunities,
-                    reuniting families, pursuing education, and building a better life. That's why we treat
+                    We understand that immigration is about more than paperwork — it is about new opportunities,
+                    reuniting families, pursuing education, and building a better life. That is why we treat
                     every client as a valued partner and provide genuine, compassionate support throughout
                     their journey.
                   </p>
+                </div>
+
+                {/* Contact Button in Our Story */}
+                <div className="mt-8 animate-fade-in delay-600">
+                  <button 
+                    onClick={openContactPopup}
+                    className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-blue-500/25"
+                  >
+                    <Send className="h-4 w-4" />
+                    Start Your Journey
+                  </button>
                 </div>
               </div>
 
@@ -365,10 +464,10 @@ export default function AboutPage() {
                 </h2>
                 <div className="space-y-3 sm:space-y-4 text-slate-600 leading-relaxed text-sm sm:text-base">
                   <p className="italic text-blue-600 font-semibold animate-fade-in delay-300">
-                    "Guiding You Beyond Borders."
+                    Guiding You Beyond Borders.
                   </p>
                   <p className="animate-fade-in delay-400">
-                    Our vision is to be recognized globally as the most trusted and client-focused immigration and travel consultancy, renowned for our integrity, innovation, and unwavering dedication to excellence. We strive to set new standards in the field of global mobility by delivering personalized solutions that simplify complex immigration and travel processes, ensuring every client's journey is smooth, transparent, and successful.
+                    Our vision is to be recognized globally as the most trusted and client-focused immigration and travel consultancy, renowned for our integrity, innovation, and unwavering dedication to excellence. We strive to set new standards in the field of global mobility by delivering personalized solutions that simplify complex immigration and travel processes, ensuring every client journey is smooth, transparent, and successful.
                   </p>
                   <p className="animate-fade-in delay-500">
                     We aim to empower individuals and families to explore new opportunities, embrace cultural diversity, and establish fulfilling lives across borders. Through continuous improvement, technological advancement, and compassionate service, we aspire to build a world where borders are not barriers but bridges to growth, connection, and opportunity.
@@ -399,6 +498,147 @@ export default function AboutPage() {
       </main>
       <Footer />
 
+      {/* Contact Form Popup */}
+      {showContactPopup && (
+        <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm ${popupAnimation.includes('animate-in') ? 'animate-in fade-in duration-300' : 'animate-out fade-out duration-300'}`}>
+          <div className={`relative bg-white rounded-2xl shadow-2xl w-full max-w-md transform ${popupAnimation} duration-300`}>
+            {/* Close Button */}
+            <button
+              onClick={closeContactPopup}
+              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-slate-100 hover:bg-slate-200 transition-all duration-300 transform hover:scale-110 hover:rotate-90"
+            >
+              <X className="h-5 w-5 text-slate-600" />
+            </button>
+
+            {/* Popup Content */}
+            <div className="p-6">
+              <div className="text-center mb-2">
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">Contact Us</h3>
+                <p className="text-slate-600">Fill in your details and we will contact you shortly</p>
+              </div>
+
+              {submitMessage && (
+                <div className={`mb-6 p-4 rounded-lg border transition-all duration-500 animate-in slide-in-from-top ${
+                  submitMessage.includes('✅') 
+                    ? 'bg-green-50 border-green-200 text-green-800' 
+                    : 'bg-red-50 border-red-200 text-red-800'
+                }`}>
+                  <div className="flex items-center gap-2">
+                    {submitMessage.includes('✅') ? (
+                      <CheckCircle className="h-5 w-5 flex-shrink-0" />
+                    ) : (
+                      <AlertCircle className="h-5 w-5 flex-shrink-0" />
+                    )}
+                    <span className="text-sm">{submitMessage}</span>
+                  </div>
+                </div>
+              )}
+
+              <form onSubmit={handleContactSubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="popup-name" className="block text-sm font-medium text-slate-800 mb-2">
+                    Full Name *
+                  </label>
+                  <input
+                    id="popup-name"
+                    name="name"
+                    type="text"
+                    required
+                    value={contactFormData.name}
+                    onChange={handleContactChange}
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300 hover:border-blue-400 focus:shadow-lg"
+                    placeholder="Enter Name"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="popup-email" className="block text-sm font-medium text-slate-800 mb-2">
+                    Email *
+                  </label>
+                  <input
+                    id="popup-email"
+                    name="email"
+                    type="email"
+                    required
+                    value={contactFormData.email}
+                    onChange={handleContactChange}
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300 hover:border-blue-400 focus:shadow-lg"
+                    placeholder="user@example.com"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="popup-phone" className="block text-sm font-medium text-slate-800 mb-2">
+                    Phone *
+                  </label>
+                  <input
+                    id="popup-phone"
+                    name="phone"
+                    type="tel"
+                    required
+                    value={contactFormData.phone}
+                    onChange={handleContactChange}
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300 hover:border-blue-400 focus:shadow-lg"
+                    placeholder="+91 7303922339"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="popup-subject" className="block text-sm font-medium text-slate-800 mb-2">
+                    Service Interested In
+                  </label>
+                  <select
+                    id="popup-subject"
+                    name="subject"
+                    value={contactFormData.subject}
+                    onChange={handleContactChange}
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-white transition-all duration-300 hover:border-blue-400 focus:shadow-lg"
+                  >
+                    <option value="">Select Service</option>
+                    <option>Work Visa</option>
+                    <option>Study Permit</option>
+                    <option>Permanent Residency</option>
+                    <option>Family Sponsorship</option>
+                    <option>Citizenship</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="popup-message" className="block text-sm font-medium text-slate-800 mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    id="popup-message"
+                    name="message"
+                    rows={3}
+                    value={contactFormData.message}
+                    onChange={handleContactChange}
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent resize-none transition-all duration-300 hover:border-blue-400 focus:shadow-lg"
+                    placeholder="Tell us about your requirements..."
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-sm font-medium text-white hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed hover:shadow-lg"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Submitting...
+                    </>
+                  ) : (
+                    "Contact Us Now"
+                  )}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Global Animations */}
       <style jsx global>{`
         @keyframes fade-in {
@@ -409,6 +649,37 @@ export default function AboutPage() {
           to {
             opacity: 1;
             transform: translateY(0);
+          }
+        }
+
+        @keyframes fade-out {
+          from {
+            opacity: 1;
+          }
+          to {
+            opacity: 0;
+          }
+        }
+
+        @keyframes zoom-in {
+          from {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes zoom-out {
+          from {
+            opacity: 1;
+            transform: scale(1);
+          }
+          to {
+            opacity: 0;
+            transform: scale(0.95);
           }
         }
 
@@ -470,6 +741,10 @@ export default function AboutPage() {
           animation: fade-in 0.6s ease-out forwards;
         }
 
+        .animate-fade-out {
+          animation: fade-out 0.3s ease-in forwards;
+        }
+
         .animate-slide-up {
           animation: slide-up 0.8s ease-out forwards;
         }
@@ -500,6 +775,22 @@ export default function AboutPage() {
         .animate-stagger > *:nth-child(2) { animation-delay: 0.2s; }
         .animate-stagger > *:nth-child(3) { animation-delay: 0.3s; }
         .animate-stagger > *:nth-child(4) { animation-delay: 0.4s; }
+
+        .animate-in {
+          animation: enter 0.2s ease-out;
+        }
+
+        .animate-out {
+          animation: exit 0.2s ease-in;
+        }
+
+        .animate-in.fade-in.zoom-in {
+          animation: fade-in 0.3s ease-out, zoom-in 0.3s ease-out;
+        }
+
+        .animate-out.fade-out.zoom-out {
+          animation: fade-out 0.3s ease-in, zoom-out 0.3s ease-in;
+        }
 
         /* Smooth scrolling */
         html {
