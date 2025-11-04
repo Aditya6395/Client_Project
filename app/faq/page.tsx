@@ -323,7 +323,7 @@ export default function FAQPage() {
       <main 
         className="min-h-screen py-12 relative"
         style={{
-          backgroundImage: `url('https://media.istockphoto.com/id/1582361888/photo/metallic-question-marks-illuminated-by-blue-and-pink-lights-on-blue-and-pink-background.jpg?s=612x612&w=0&k=20&c=LtkGr3xCQuZmMqhu3RIZFAzx6ILDyomk4-pwEiyxWms=')`,
+          backgroundImage: `url('https://t3.ftcdn.net/jpg/02/30/58/12/360_F_230581296_ij8VjSzEmGDlLhDiy6MSlJRR6AvIvcOT.jpg')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
