@@ -290,14 +290,12 @@ export default function FAQPage() {
     },
   ];
 
-
   const toggleItem = (id: string) => {
     setOpenItems((prev) => ({
       ...prev,
       [id]: !prev[id],
     }));
   };
-
 
   const toggleCategory = (categoryId: string) => {
     setOpenItems((prev) => ({
@@ -322,14 +320,25 @@ export default function FAQPage() {
       {/* ✅ Include Navbar at top */}
       <Navbar />
 
-      <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <main 
+        className="min-h-screen py-12 relative"
+        style={{
+          backgroundImage: `url('https://media.istockphoto.com/id/1582361888/photo/metallic-question-marks-illuminated-by-blue-and-pink-lights-on-blue-and-pink-background.jpg?s=612x612&w=0&k=20&c=LtkGr3xCQuZmMqhu3RIZFAzx6ILDyomk4-pwEiyxWms=')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+        }}
+      >
+        {/* Overlay for better readability */}
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
               Frequently Asked Questions
             </h1>
-            <p className="text-lg text-gray-600 mb-8">
+            <p className="text-lg text-white mb-8 drop-shadow-md">
               Find answers to common questions about immigration, visas, and our
               services
             </p>
@@ -342,7 +351,7 @@ export default function FAQPage() {
                 placeholder="Search FAQs..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-white bg-opacity-95 backdrop-blur-sm"
               />
             </div>
           </div>
@@ -352,20 +361,20 @@ export default function FAQPage() {
             {filteredData.map((category) => (
               <div
                 key={category.id}
-                className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl"
+                className="bg-white bg-opacity-95 backdrop-blur-sm rounded-xl shadow-2xl border border-white border-opacity-30 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:bg-opacity-100"
               >
                 {/* Category Header */}
                 <button
                   onClick={() => toggleCategory(category.id)}
-                  className="w-full px-6 py-4 text-left bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 transition-all duration-300 flex items-center justify-between"
+                  className="w-full px-6 py-4 text-left bg-gradient-to-r from-white-600 to-white-600 hover:from-white-700 hover:to-white-700 transition-all duration-300 flex items-center justify-between"
                 >
-                  <h2 className="text-xl font-bold text-gray-900">
+                  <h2 className="text-xl font-bold text-black">
                     {category.title}
                   </h2>
                   {openItems[category.id] ? (
-                    <ChevronUp className="h-6 w-6 text-gray-600" />
+                    <ChevronUp className="h-6 w-6 text-white" />
                   ) : (
-                    <ChevronDown className="h-6 w-6 text-gray-600" />
+                    <ChevronDown className="h-6 w-6 text-white" />
                   )}
                 </button>
 
@@ -375,7 +384,7 @@ export default function FAQPage() {
                     {category.questions.map((item) => (
                       <div
                         key={item.id}
-                        className="border-b border-gray-100 last:border-b-0 bg-white hover:bg-blue-50"
+                        className="border-b border-gray-100 last:border-b-0 bg-white hover:bg-blue-50 transition-colors duration-200"
                       >
                         <button
                           onClick={() => toggleItem(item.id)}
@@ -413,11 +422,11 @@ export default function FAQPage() {
           {/* No Results */}
           {filteredData.length === 0 && (
             <div className="text-center py-12">
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              <div className="text-6xl mb-4 text-white">🔍</div>
+              <h3 className="text-xl font-semibold text-white mb-2">
                 No results found
               </h3>
-              <p className="text-gray-600">
+              <p className="text-white text-opacity-90">
                 Try searching with different keywords
               </p>
             </div>
@@ -425,7 +434,7 @@ export default function FAQPage() {
 
           {/* Contact CTA */}
           <div className="mt-12 text-center">
-            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
+            <div className="bg-white bg-opacity-95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-white border-opacity-30">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">
                 Still have questions?
               </h3>
@@ -433,7 +442,7 @@ export default function FAQPage() {
                 Our immigration experts are here to help you with personalized
                 guidance.
               </p>
-              <button className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105">
+              <button className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
                 Contact Us Now
               </button>
             </div>
