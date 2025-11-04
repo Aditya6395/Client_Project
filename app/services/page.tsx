@@ -32,7 +32,7 @@ export default function ServicesPage() {
       ],
       stats: { successRate: 98, processingTime: "2-4 weeks", clients: 2500 },
       image: "https://img.freepik.com/free-photo/medium-shot-smiley-couple-with-documents_23-2149272139.jpg?semt=ais_hybrid&w=740&q=80",
-      countries: ["Canada", "USA", "UK", "Australia", "Schengen", "Dubai", "New Zealand", "Japan"]
+      countries: ["Canada", "USA", "UK", "Australia", "Schengen", "Dubai", "New Zealand", "Japan", "Many more"]
     },
     {
       id: "pr",

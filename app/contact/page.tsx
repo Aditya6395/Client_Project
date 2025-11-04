@@ -156,7 +156,7 @@ export default function ContactPage() {
               </h1>
               <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-8 rounded-full animate-in slide-in-from-left duration-1000 delay-300"></div>
               <p className="mt-4 text-lg text-slate-600 leading-relaxed animate-in fade-in duration-1000 delay-500">
-                Have questions about your immigration options? We're here to help.
+                Have questions about your immigration options? We are here to help.
                 Reach out to our expert team today.
               </p>
               
@@ -230,7 +230,7 @@ export default function ContactPage() {
                   
                   <div className="relative">
                     <h2 className="text-2xl font-bold text-slate-900 mb-2">Send Us a Message</h2>
-                    <p className="text-slate-600 mb-6">We'll get back to you within 24 hours</p>
+                    <p className="text-slate-600 mb-6">We will get back to you within 24 hours</p>
 
                     {submitMessage && (
                       <div className={`mb-6 p-4 rounded-lg border transition-all duration-500 animate-in slide-in-from-top ${
@@ -372,7 +372,7 @@ export default function ContactPage() {
               <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto mb-4"></div>
               <p className="text-lg text-slate-600 max-w-2xl mx-auto">
                 Visit us at our conveniently located office in Janak Puri, New Delhi. 
-                We're here to help you with all your immigration needs.
+                We are here to help you with all your immigration needs.
               </p>
             </div>
             
@@ -445,7 +445,7 @@ export default function ContactPage() {
                 Ready to Start Your Journey?
               </h2>
               <p className="text-lg text-slate-600 mb-8 animate-in fade-in duration-1000 delay-300">
-                Let's discuss your immigration goals and find the best pathway for you.
+                Let us discuss your immigration goals and find the best pathway for you.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in fade-in duration-1000 delay-500">
                 <button
@@ -484,7 +484,7 @@ export default function ContactPage() {
             <div className="p-6">
               <div className="text-center mb-2">
                 <h3 className="text-2xl font-bold text-slate-900 mb-2">Contact Us</h3>
-                <p className="text-slate-600">Fill in your details and we'll contact you shortly</p>
+                <p className="text-slate-600">Fill in your details and we will contact you shortly</p>
               </div>
 
               {submitMessage && (
@@ -549,7 +549,7 @@ export default function ContactPage() {
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300 hover:border-blue-400 focus:shadow-lg"
-                    placeholder="+91 88600 28328"
+                    placeholder="+91 7303922339 "
                   />
                 </div>
 
