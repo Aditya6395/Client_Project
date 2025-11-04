@@ -161,7 +161,7 @@ export default function Footer() {
                   <Phone className="h-4 w-4 text-green-400 group-hover:text-white" />
                 </div>
                 <a 
-                  href="tel:8860028328" 
+                  href="tel:7303922339" 
                   className="text-slate-400 group-hover:text-white transition-all duration-300 transform group-hover:translate-x-1"
                 >
                   +91 7303922339
@@ -173,7 +173,7 @@ export default function Footer() {
                   <Mail className="h-4 w-4 text-red-400 group-hover:text-white" />
                 </div>
                 <a 
-                  href="mailto:Visavikassinghji@gmail.com" 
+                  href="mailto:info@rvglobalimmigrationservices.in" 
                   className="text-slate-400 group-hover:text-white transition-all duration-300 transform group-hover:translate-x-1"
                 >
                   info@rvglobalimmigrationservices.in
