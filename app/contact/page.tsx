@@ -113,7 +113,7 @@ export default function ContactPage() {
     {
       icon: Phone,
       title: "Phone",
-      content: "+91 88600 28328",
+      content: "+91 7303922339",
       color: "from-green-500 to-green-600",
       bgColor: "bg-green-100",
       delay: 100
@@ -121,7 +121,7 @@ export default function ContactPage() {
     {
       icon: Mail,
       title: "Email",
-      content: "Visavikassinghji@gmail.com",
+      content: "info@rvglobalimmigrationservices.in",
       color: "from-purple-500 to-purple-600",
       bgColor: "bg-purple-100",
       delay: 200
@@ -416,7 +416,7 @@ export default function ContactPage() {
                   <h3 className="font-semibold text-slate-900">Call Us</h3>
                 </div>
                 <p className="text-slate-600 text-sm">
-                  +91 88600 28328
+                  +91 7303922339
                 </p>
               </div>
 
@@ -456,7 +456,7 @@ export default function ContactPage() {
                   Contact Us Now
                 </button>
                 <a
-                  href="tel:+918860028328"
+                  href="tel:+917303922339"
                   className="inline-flex items-center justify-center gap-2 rounded-xl border border-blue-600 px-8 py-4 text-base font-medium text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-105"
                 >
                   <Phone className="h-5 w-5" />
