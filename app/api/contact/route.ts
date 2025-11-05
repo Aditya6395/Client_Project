@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+// import { supabase } from "@/lib/supabase";
 import { Resend } from "resend";
 
 export const dynamic = "force-dynamic";
@@ -17,17 +17,17 @@ export async function POST(request: Request) {
     console.log("🔑 Resend key present:", !!process.env.RESEND_API_KEY);
     console.log("📨 Admin email target:", adminEmail);
 
-    // Store in Supabase
-    const { error } = await supabase.from("contact_messages").insert([
-      { name, email, phone, subject, message },
-    ]);
+    // // Store in Supabase
+    // const { error } = await supabase.from("contact_messages").insert([
+    //   { name, email, phone, subject, message },
+    // ]);
 
-    if (error) {
-      console.error("❌ Supabase insert error:", error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    // if (error) {
+    //   console.error("❌ Supabase insert error:", error);
+    //   return NextResponse.json({ error: error.message }, { status: 500 });
+    // }
 
-    console.log("✅ Saved in Supabase successfully!");
+    // console.log("✅ Saved in Supabase successfully!");
 
     // Send admin email via Resend
     try {

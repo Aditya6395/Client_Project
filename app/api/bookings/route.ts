@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+// import { supabase } from "@/lib/supabase";
 import { Resend } from "resend";
 
 export const dynamic = "force-dynamic";
@@ -12,23 +12,23 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, email, phone, service, date, time, message } = body;
 
-    // Store in Supabase
-    const { error } = await supabase.from("consultation_bookings").insert([
-      {
-        name,
-        email,
-        phone,
-        service,
-        preferred_date: date,
-        preferred_time: time,
-        message,
-      },
-    ]);
+    // // Store in Supabase
+    // const { error } = await supabase.from("consultation_bookings").insert([
+    //   {
+    //     name,
+    //     email,
+    //     phone,
+    //     service,
+    //     preferred_date: date,
+    //     preferred_time: time,
+    //     message,
+    //   },
+    // ]);
 
-    if (error) {
-      console.error("Supabase insert error:", error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    // if (error) {
+    //   console.error("Supabase insert error:", error);
+    //   return NextResponse.json({ error: error.message }, { status: 500 });
+    // }
 
     // Send admin email
     await resend.emails.send({
