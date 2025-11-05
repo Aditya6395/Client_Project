@@ -1,447 +1,138 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown, ChevronUp, Search } from "lucide-react";
 import Navbar from "@/components/site/navbar";
 import Footer from "@/components/site/footer";
 
-export default function FAQPage() {
-  const [openItems, setOpenItems] = useState<{ [key: string]: boolean }>({});
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
-
-  const faqData = [
-    {
-      id: "general",
-      title: "🌍 General Immigration FAQs",
-      questions: [
-        {
-          id: "gen-1",
-          question: "What services does your company provide?",
-          answer:
-            "We assist with permanent residency (PR), work permits, study visas, visitor visas, and dependent/family visas for countries like Canada, Australia, the UK, the USA, and Europe.",
-        },
-        {
-          id: "gen-2",
-          question: "How do I know if I'm eligible to apply for a visa or PR?",
-          answer:
-            "Our experts will assess your profile based on age, education, work experience, language skills, and other factors as per the country's immigration system.",
-        },
-        {
-          id: "gen-3",
-          question: "Do you charge for an eligibility assessment?",
-          answer:
-            "We offer a free initial assessment to help you understand your options before proceeding with a full application.",
-        },
-        {
-          id: "gen-4",
-          question: "Is the entire process handled online?",
-          answer:
-            "Yes, most immigration processes are online, including documentation, payments, and consultations.",
-        },
-        {
-          id: "gen-5",
-          question: "How long does the visa or PR process take?",
-          answer:
-            "Processing times vary by country and visa category. For example, PR may take 8-12 months, while visitor visas can be processed in 2-8 weeks.",
-        },
-      ],
-    },
-    {
-      id: "canada",
-      title: "🇨🇦 Canada Immigration FAQs",
-      questions: [
-        {
-          id: "can-6",
-          question: "What is Canada PR and what are its benefits?",
-          answer:
-            "Canada PR (Permanent Residency) allows you to live, work, and settle anywhere in Canada permanently. You also enjoy benefits like healthcare, education, and the pathway to Canadian citizenship.",
-        },
-        {
-          id: "can-7",
-          question: "Can I include my spouse and children in the same PR application?",
-          answer:
-            "Yes, your spouse and dependent children can be included in your main PR file.",
-        },
-        {
-          id: "can-8",
-          question: "What are the government fees for Canada PR?",
-          answer:
-            "They include processing fees and Right of Permanent Residence Fee (RPRF). Dependents have separate, lower fees.",
-        },
-        {
-          id: "can-9",
-          question: "What are the main pathways to apply for Canada PR?",
-          answer:
-            "The most popular routes are:\n• Express Entry (Federal Skilled Worker, Federal Skilled Trades, Canadian Experience Class)\n• Provincial Nominee Programs (PNP)\n• Family Sponsorship\n• Study-to-PR pathways",
-        },
-        {
-          id: "can-10",
-          question: "What is an ECA (Educational Credential Assessment)?",
-          answer:
-            "It's required for Canada PR to verify that your foreign education is equivalent to Canadian standards.",
-        },
-      ],
-    },
-    {
-      id: "australia",
-      title: "🇦🇺 Australia Immigration FAQs",
-      questions: [
-        {
-          id: "aus-11",
-          question: "What is the difference between subclass 189, 190, and 491?",
-          answer:
-            "189: Independent PR (no sponsorship needed)\n190: State-sponsored PR\n491: Regional provisional visa (pathway to PR after 3 years)",
-        },
-        {
-          id: "aus-12",
-          question: "What is the minimum points requirement for Australia PR?",
-          answer:
-            "You need a minimum of 65 points, but higher scores increase your chances of invitation.",
-        },
-        {
-          id: "aus-13",
-          question: "What is a skills assessment?",
-          answer:
-            "It's a mandatory process where an authorized body verifies your education and work experience.",
-        },
-        {
-          id: "aus-14",
-          question: "Can I apply for PR without a job offer?",
-          answer:
-            "Yes, for most subclasses (189 & 190), a job offer is not mandatory.",
-        },
-        {
-          id: "aus-15",
-          question: "How does the Australia PR points system work?",
-          answer:
-            "Points are awarded for age, qualification, work experience, English language ability, and other factors such as state nomination or study in Australia. Higher scores increase your chances of receiving an Invitation to Apply (ITA).",
-        },
-      ],
-    },
-    {
-      id: "visitor",
-      title: "✈️ Visitor Visa FAQs",
-      questions: [
-        {
-          id: "vis-16",
-          question: "What is a visitor visa and who can apply for it?",
-          answer:
-            "A visitor visa allows you to travel temporarily to another country for tourism, meeting friends or family, or attending short-term business or cultural events.",
-        },
-        {
-          id: "vis-17",
-          question: "How long does it take to get a visitor visa?",
-          answer:
-            "Processing time usually ranges between 2 to 6 weeks, depending on the destination country and time of year.",
-        },
-        {
-          id: "vis-18",
-          question: "Can I extend my visitor visa or apply for another visa while abroad?",
-          answer:
-            "Some countries allow extensions; others require reapplication from your home country. We'll guide you based on your destination's policy.",
-        },
-        {
-          id: "vis-19",
-          question: "What are common reasons for visitor visa rejection?",
-          answer:
-            "Rejections usually happen due to insufficient funds, unclear travel purpose, weak home ties, or incomplete documents. We help strengthen your file to avoid this.",
-        },
-        {
-          id: "vis-20",
-          question: "Do I need travel insurance for a visitor visa?",
-          answer:
-            "Yes, many countries (especially Schengen, the UK, and Canada) require valid travel and health insurance covering your stay duration.",
-        },
-      ],
-    },
-    {
-      id: "study",
-      title: "🎓 Study Visa FAQs",
-      questions: [
-        {
-          id: "stu-21",
-          question: "What is a study visa?",
-          answer:
-            "A study visa allows international students to pursue full-time education in a recognized institution abroad.",
-        },
-        {
-          id: "stu-22",
-          question: "What is a Statement of Purpose (SOP) and why is it important?",
-          answer:
-            "An SOP explains your academic background, study goals, and reasons for choosing a specific course and institution. A strong SOP greatly improves visa approval chances.",
-        },
-        {
-          id: "stu-23",
-          question: "How much bank balance is required for a study visa?",
-          answer:
-            "The required amount varies by country and program — typically, you must show funds to cover at least one year of tuition and living expenses.",
-        },
-        {
-          id: "stu-24",
-          question: "Can I work while studying abroad?",
-          answer:
-            "Yes, most countries allow part-time work (usually up to 20 hours per week) during academic sessions and full-time during breaks.",
-        },
-        {
-          id: "stu-25",
-          question: "Can I apply for a post-study work visa after graduation?",
-          answer:
-            "Yes, countries like Canada, Australia, and the UK offer post-study work permits that let you gain work experience after completing your studies.",
-        },
-      ],
-    },
-    {
-      id: "work",
-      title: "💼 Work Visa FAQs",
-      questions: [
-        {
-          id: "work-26",
-          question: "What is a work visa?",
-          answer:
-            "A work visa allows you to live and work in a foreign country legally for a specific employer or occupation.",
-        },
-        {
-          id: "work-27",
-          question: "What are the requirements for a work visa?",
-          answer:
-            "You generally need a valid job offer, employment contract, qualifications relevant to the job, proof of work experience, and sometimes a labor market test approval.",
-        },
-        {
-          id: "work-28",
-          question: "How long does it take to process a work visa?",
-          answer:
-            "Processing time depends on the country and visa type — usually 4 to 12 weeks after submission of complete documents.",
-        },
-        {
-          id: "work-29",
-          question: "Can I take my family with me on a work visa?",
-          answer:
-            "Yes, in most countries you can sponsor your spouse and dependent children on dependent or family visas.",
-        },
-        {
-          id: "work-30",
-          question: "What is the difference between a work permit and a PR visa?",
-          answer:
-            "A work permit allows temporary employment in a foreign country, while PR (Permanent Residency) gives you the right to live and work there permanently.",
-        },
-        {
-          id: "work-31",
-          question: "Can my work visa be converted to PR?",
-          answer:
-            "Yes, many countries (like Canada, Australia, and New Zealand) offer pathways to PR after gaining certain work experience and meeting eligibility criteria.",
-        },
-      ],
-    },
-    {
-      id: "consultation",
-      title: "💬 Consultation & Support FAQs",
-      questions: [
-        {
-          id: "con-32",
-          question: "Do you help in selecting the right country or visa type?",
-          answer:
-            "Yes, we guide you based on your profile, goals, and eligibility.",
-        },
-        {
-          id: "con-33",
-          question: "How do I track my application status?",
-          answer:
-            "We provide regular updates and tracking through our portal and dedicated case manager.",
-        },
-        {
-          id: "con-34",
-          question: "Is there a refund policy if I don't qualify?",
-          answer:
-            "Refund policies depend on the stage of the process. We maintain transparency before signing any service agreement.",
-        },
-        {
-          id: "con-35",
-          question: "Can I switch my visa type after applying?",
-          answer:
-            "In most cases, yes — with proper documentation and if the immigration laws of the country allow it.",
-        },
-        {
-          id: "con-36",
-          question: "What makes your services different from others?",
-          answer:
-            "We provide personalized case handling, transparent communication, and end-to-end support until visa approval.",
-        },
-        {
-          id: "con-37",
-          question: "Is my personal information kept confidential?",
-          answer:
-            "Absolutely. All client data is securely stored and used only for visa processing.",
-        },
-        {
-          id: "con-38",
-          question: "What if I don't qualify for the visa I applied for?",
-          answer:
-            "We reassess your profile and suggest alternate visa routes or suitable destinations.",
-        },
-        {
-          id: "con-39",
-          question:
-            "Do you help with visitor visa documentation and interview preparation?",
-          answer:
-            "Yes, our experts help you prepare all documents, create a strong cover letter, and train you for visa interviews if required.",
-        },
-      ],
-    },
-  ];
-
-
-  const toggleItem = (id: string) => {
-    setOpenItems((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
-
-
-  const toggleCategory = (categoryId: string) => {
-    setOpenItems((prev) => ({
-      ...prev,
-      [categoryId]: !prev[categoryId],
-    }));
-  };
-
-  const filteredData = faqData
-    .map((category) => ({
-      ...category,
-      questions: category.questions.filter(
-        (q) =>
-          q.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          q.answer.toLowerCase().includes(searchTerm.toLowerCase())
-      ),
-    }))
-    .filter((category) => category.questions.length > 0);
-
+export default function PrivacyPolicyPage() {
   return (
     <>
-      {/* ✅ Include Navbar at top */}
       <Navbar />
 
       <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Frequently Asked Questions
+     
+          {/* Enhanced Header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6">
+              <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <h1 className="text-5xl font-bold text-gray-900 mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Privacy Policy
             </h1>
-            <p className="text-lg text-gray-600 mb-8">
-              Find answers to common questions about immigration, visas, and our
-              services
-            </p>
-
-            {/* Search Bar */}
-            <div className="max-w-md mx-auto relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-              <input
-                type="text"
-                placeholder="Search FAQs..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-              />
-            </div>
           </div>
 
-          {/* FAQ Categories */}
-          <div className="space-y-6">
-            {filteredData.map((category) => (
-              <div
-                key={category.id}
-                className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl"
-              >
-                {/* Category Header */}
-                <button
-                  onClick={() => toggleCategory(category.id)}
-                  className="w-full px-6 py-4 text-left bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 transition-all duration-300 flex items-center justify-between"
-                >
-                  <h2 className="text-xl font-bold text-gray-900">
-                    {category.title}
-                  </h2>
-                  {openItems[category.id] ? (
-                    <ChevronUp className="h-6 w-6 text-gray-600" />
-                  ) : (
-                    <ChevronDown className="h-6 w-6 text-gray-600" />
-                  )}
-                </button>
+          {/* Privacy Policy Content */}
+          <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
+            <div className="prose prose-lg max-w-none">
+              <p className="text-lg font-medium text-gray-800 mb-6">
+                At <span className="font-bold">RV Global Immigration</span>, your privacy is our top priority. We understand that applying for immigration, visa, or settlement services involves sharing sensitive personal information — and we are fully committed to protecting it with the highest standards of security and confidentiality.
+              </p>
 
-                {/* Category Questions */}
-                {openItems[category.id] && (
-                  <div className="border-t border-gray-200">
-                    {category.questions.map((item) => (
-                      <div
-                        key={item.id}
-                        className="border-b border-gray-100 last:border-b-0 bg-white hover:bg-blue-50"
-                      >
-                        <button
-                          onClick={() => toggleItem(item.id)}
-                          className="w-full px-6 py-4 text-left flex items-center justify-between"
-                        >
-                          <span className="font-medium text-gray-900 text-lg pr-4">
-                            {item.question}
-                          </span>
-                          {openItems[item.id] ? (
-                            <ChevronUp className="h-5 w-5 text-blue-600" />
-                          ) : (
-                            <ChevronDown className="h-5 w-5 text-gray-500" />
-                          )}
-                        </button>
+              <p className="text-lg font-medium text-gray-800 mb-8">
+                This Privacy Policy describes <span className="font-semibold">how we collect, use, process, and protect</span> your personal information when you visit our website, contact us, or engage our professional immigration services. It also explains your rights regarding the information you share with us and how you can exercise those rights.
+              </p>
 
-                        {openItems[item.id] && (
-                          <div className="px-6 pb-4">
-                            <div className="text-gray-700 bg-blue-50 rounded-lg p-4 border border-blue-100">
-                              {item.answer.split("\n").map((line, i) => (
-                                <p key={i} className="mb-2 last:mb-0">
-                                  {line}
-                                </p>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
+              <p className="text-gray-700 mb-8">
+                By accessing our website or using our services, you acknowledge that you have read and understood this Privacy Policy and agree to the collection and use of your information as described herein. If you do not agree with any part of this policy, we advise you to discontinue use of our website and services.
+              </p>
+
+              <div className="border-t border-gray-200 pt-8 mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Our Commitment to Your Privacy</h2>
+                <p className="text-gray-700 mb-6">
+                  At RV Global Immigration, we treat your personal information with the utmost care and transparency. We collect only what is necessary to deliver personalized, efficient, and compliant immigration solutions. We do not sell, rent, or misuse your data in any manner. Every piece of information you share with us is protected under strict security protocols and used solely for legitimate business and legal purposes.
+                </p>
               </div>
-            ))}
-          </div>
 
-          {/* No Results */}
-          {filteredData.length === 0 && (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                No results found
-              </h3>
-              <p className="text-gray-600">
-                Try searching with different keywords
-              </p>
-            </div>
-          )}
+              <div className="border-t border-gray-200 pt-8 mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Scope of This Policy</h2>
+                <p className="text-gray-700 mb-4">
+                  This policy applies to all personal information collected through:
+                </p>
+                <ul className="list-disc pl-6 text-gray-700 mb-6 space-y-2">
+                  <li>Our official website</li>
+                  <li>Direct communication channels (such as phone, email, or WhatsApp)</li>
+                  <li>In-person consultations and document submissions</li>
+                  <li>Online forms, assessments, or applications you complete with us</li>
+                </ul>
+              </div>
 
-          {/* Contact CTA */}
-          <div className="mt-12 text-center">
-            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                Still have questions?
-              </h3>
-              <p className="text-gray-600 mb-6">
-                Our immigration experts are here to help you with personalized
-                guidance.
-              </p>
-              <button className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105">
-                Contact Us Now
-              </button>
+              <div className="border-t border-gray-200 pt-8 mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">3. What We Collect</h2>
+                <p className="text-gray-700 mb-4">
+                  Depending on the service you use, we may collect the following:
+                </p>
+                <ul className="list-disc pl-6 text-gray-700 mb-6 space-y-2">
+                  <li><span className="font-medium">Personal Details:</span> Full name, contact number, email, date of birth, nationality, and identification details (e.g., passport number).</li>
+                  <li><span className="font-medium">Educational and Employment Information:</span> Qualifications, work history, certifications, and relevant supporting documents.</li>
+                  <li><span className="font-medium">Immigration and Travel Information:</span> Visa history, travel records, and application data required for assessments or submissions.</li>
+                  <li><span className="font-medium">Technical Information:</span> Browser type, IP address, device information, and usage data through cookies and analytics tools to improve your online experience.</li>
+                </ul>
+              </div>
+
+              <div className="border-t border-gray-200 pt-8 mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">4. How We Use Your Information</h2>
+                <p className="text-gray-700 mb-4">
+                  Your data enables us to:
+                </p>
+                <ul className="list-disc pl-6 text-gray-700 mb-6 space-y-2">
+                  <li>Provide accurate immigration advice, evaluation, and application support</li>
+                  <li>Communicate updates and manage your case efficiently</li>
+                  <li>Improve our website and tailor content for better user experience</li>
+                  <li>Fulfill legal and regulatory requirements under immigration laws</li>
+                  <li>Send relevant updates, newsletters, or promotional offers (only if you opt in)</li>
+                </ul>
+              </div>
+
+              <div className="border-t border-gray-200 pt-8 mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Protecting Your Information</h2>
+                <p className="text-gray-700 mb-6">
+                  We use advanced administrative, technical, and physical security measures to safeguard your personal data from unauthorized access, alteration, or disclosure. Our systems comply with recognized privacy and data protection standards. Only authorized team members and trusted partners directly involved in your case have access to your data — and strictly on a need-to-know basis.
+                </p>
+              </div>
+
+              <div className="border-t border-gray-200 pt-8 mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Your Rights and Choices</h2>
+                <p className="text-gray-700 mb-4">
+                  You have the right to:
+                </p>
+                <ul className="list-disc pl-6 text-gray-700 mb-6 space-y-2">
+                  <li>Access, update, or correct your personal data</li>
+                  <li>Request deletion of your data, where legally applicable</li>
+                  <li>Withdraw consent for communications at any time</li>
+                  <li>Know how and why your data is used</li>
+                </ul>
+                <p className="text-gray-700 mb-6">
+                  For any privacy-related requests, please contact our Data Protection Officer.
+                </p>
+              </div>
+
+              <div className="border-t border-gray-200 pt-8 mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Policy Updates</h2>
+                <p className="text-gray-700 mb-6">
+                  RV Global Immigration reserves the right to modify or update this Privacy Policy periodically to reflect changes in our practices, services, or legal obligations. Any updates will be posted on this page with a revised effective date. We encourage you to review this policy regularly to stay informed.
+                </p>
+              </div>
+
+              <div className="border-t border-gray-200 pt-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Contact Information</h2>
+                <p className="text-gray-700 mb-6">
+                  If you have questions, concerns, or complaints about our Privacy Policy or how your personal information is handled, please reach out to us:
+                </p>
+                <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
+                  <p className="font-bold text-gray-900 mb-2">RV Global Immigration</p>
+                  <p className="text-gray-700">Email: info@rvglobalimmigrationservices.in</p>
+                  <p className="text-gray-700">Phone: +91 7303922339</p>
+                  <p className="text-gray-700">Address: A-1/77 Chanakya Place Gali No 11
+Janak Puri Part 1
+New Delhi 110059</p>
+                </div>
+              </div>
             </div>
-          </div>
+        
         </div>
       </main>
 
-      {/* ✅ Include Footer at bottom */}
       <Footer />
     </>
   );

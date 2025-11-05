@@ -431,22 +431,6 @@ export default function FAQPage() {
               </p>
             </div>
           )}
-
-          {/* Contact CTA */}
-          <div className="mt-12 text-center">
-            <div className="bg-white bg-opacity-95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-white border-opacity-30">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                Still have questions?
-              </h3>
-              <p className="text-gray-600 mb-6">
-                Our immigration experts are here to help you with personalized
-                guidance.
-              </p>
-              <button className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                Contact Us Now
-              </button>
-            </div>
-          </div>
         </div>
       </main>
 
