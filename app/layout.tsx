@@ -1,9 +1,9 @@
-// app/layout.tsx
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import FaviconRotator from '../components/FaviconRotator';
-import AutoPopup from '../components/site/auto-popup'; // <-- Add this import
+import AutoPopup from '../components/site/auto-popup';
+import BubbleBackground from '../components/BubbleBackground'; // <-- Import
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,8 +24,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <FaviconRotator />
+        <BubbleBackground /> {/* 👈 Background bubbles */}
         {children}
-        <AutoPopup /> {/* <-- Add this component here */}
+        <AutoPopup />
       </body>
     </html>
   );
